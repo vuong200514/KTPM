@@ -40,7 +40,7 @@ Auto Challenge là một công cụ viết bằng AutoHotkey giúp người dùn
 
 ## Ảnh demo UI
 
-<img src="Images/demo.png" width="600" alt="GUI"/>
+<img src="Lib/Images/demo.png" width="600" alt="GUI"/>
 
 ---
 > © 2025 Nhóm 0_9 – Tự động hóa để chiến thắng!
