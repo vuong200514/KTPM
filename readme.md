@@ -36,4 +36,11 @@ Auto Challenge là một công cụ viết bằng AutoHotkey giúp người dùn
 | Giao diện người dùng (GUI)       | Cho phép người dùng bật/tắt tính năng, chỉnh cài đặt                  |
 | Gửi log qua Discord              | Hỗ trợ gửi thông báo qua webhook (ví dụ khi hoàn thành nhiệm vụ)     |
 
+---
+
+## Ảnh demo UI
+
+<img src="Images/demo.png" width="600" alt="GUI"/>
+
+---
 > © 2025 Nhóm 0_9 – Tự động hóa để chiến thắng!
