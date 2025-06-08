@@ -1,19 +1,22 @@
 #Include %A_ScriptDir%\Lib\FindText.ahk
 #Include %A_ScriptDir%\Lib\Discord-Webhook-master\lib\WEBHOOK.ahk
 #Include %A_ScriptDir%\Lib\AHKv2-Gdip-master\Gdip_All.ahk
+#Include %A_ScriptDir%\Lib\gui.ahk
+#Include %A_ScriptDir%\Lib\otherfuncs.ahk
 SendMode "Event"
 
 global MacroStartTime := A_TickCount
 global resizetimecheck := A_TickCount
 
-global ChallengeMods := Map(
-    "TraitReroll", { name: "TraitReroll", gems: 0, gold: 1000, rerolls: 1, bounties: 0 },
-    "StoryMode", { name: "StoryMode", gems: 580, gold: 100, rerolls: 1, bounties: 1 },
-    "LegendStage", { name: "LegendStage", gems: 530, gold: 75, rerolls: 1, bounties: 1 },
-    "Infinity", { name: "Infinity", gems: 800, gold: 750, rerolls: 0, bounties: 0 },
-)
-
-RobloxWindow := "ahk_exe RobloxPlayerBeta.exe"
+CurrentChallengeMod := ""
+GemsEarned := 0
+GoldCoins := 0
+TraitRerolls := 0
+StatChips := 0
+SuperStatChips := 0
+GreenEssence := 0
+ColoredEssence := 0
+Bounties := 0
 
 Startercard :=
     "|<>*138$45.zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzy7TzyzzzUnzzbzzwyDzwTzzXUU011Vw640480DwH63a07xmAUQEQzUsU3l1by762yABzzzzzzzzzzzzzzzzzzzzzzzU"
@@ -141,6 +144,7 @@ lbcheckk := "|<>*73$8.D1W1kwC163m"
 lbcheckk4 :="|<>*64$7.S60AC61ADDo"
 gamecheck:= "|<>*110$49.zzzzzzz0TzzzzzzUDzzzzzzns001zzzty001zzzwzzzzzzzyTzzzzzzzDTzzzzzzbjzzzzzznzzzzzzztw000zzzwz000zzzyTzzzzzzzDzzzzzzzbzzzzzzznzzzzzzztzzzzzzzw0000Tzzzs000Dzzzzk"
 
+global dodaily := DoDailyChallengeBox.Value
 dailychallenge := "|<>*144$19.3zDgl7b02X210A0n"
 regular := "|<>*138$25.csgQ086A0134YS432"
 disconected := "|<>*112$40.DvinjRozSTiNj3w1kta0DrwPqvwzDrj3bs"
@@ -148,3 +152,33 @@ disconected := "|<>*112$40.DvinjRozSTiNj3w1kta0DrwPqvwzDrj3bs"
 rewardchallenge := "|<>*125$49.sU1a83000F4UA1UU0EW04MnnU81U6ANlnWDk3UAw1l0Mlk6S0wkSNwHDUE"
 startcheck :=
     "|<>*131$48.U2V0000802V000083bVtzrzs3z0D4QEk1y0A0A0UU6080A0Uk30M0ABkw3VswADMzVVMwAM87VVsQAM833Vs0AM803kQ0AMAU6kQ0AMAU"
+
+global BountyCheck := 1
+global lastInput := ""
+global paused := false
+global LastResetTime := A_TickCount
+global CurrentChallenge := "None"
+global ChallengeMods := Map(
+    "TraitReroll", { name: "TraitReroll", gems: 0, gold: 1000, rerolls: 1, bounties: 0 },
+    "StoryMode", { name: "StoryMode", gems: 580, gold: 100, rerolls: 1, bounties: 1 },
+    "LegendStage", { name: "LegendStage", gems: 530, gold: 75, rerolls: 1, bounties: 1 },
+    "Infinity", { name: "Infinity", gems: 800, gold: 750, rerolls: 0, bounties: 0 },
+)
+
+RobloxWindow := "ahk_exe RobloxPlayerBeta.exe"
+
+UpdateGUI(CurrentChallenge)
+
+modType := ""
+if (CurrentChallengeMod = "Mod 1")
+    modType := "Green Essence Challenge"
+else if (CurrentChallengeMod = "Mod 2")
+    modType := "Trait Reroll Challenge"
+else if (CurrentChallengeMod = "Mod 3")
+    modType := "Stat Chip Challenge"
+else if (CurrentChallengeMod = "Mod 4")
+    modType := "Story Mode"
+else if (CurrentChallengeMod = "Mod 5")
+    modType := "Infinite"
+else if (CurrentChallengeMod = "Mod 1.5")
+    modType := "Legend Stage"
