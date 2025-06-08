@@ -169,6 +169,49 @@ StartBounty() {
     }
 }
 
+BountyAssign() {
+    global CurrentChallenge, CurrentChallengeMod
+    loop {
+        sleep 100
+        Disconect()
+        if (ok := FindText(&X, &Y, 589 - 150000, 493 - 150000, 589 + 150000, 493 + 150000, 0, 0, startbountycheck)) {
+            break
+        }
+    }
+    if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, ShibuyaStationBounty)) {
+        CurrentChallenge := ShibuyaStationBounty
+        AddToLog("Loading in Shibuya Station Bounty")
+        UpdateGUI("Shibuya Station Bounty")
+    } else if (ok := FindText(&X, &Y, 614 - 150000, 233 - 150000, 614 + 150000, 233 + 150000, 0, 0, Landofthegods)) {
+        CurrentChallenge := Landofgods
+        AddToLog("Loading in Land of the Gods Bounty")
+        UpdateGUI("Land of the Gods Bounty")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, marshalislandbounty)) {
+        CurrentChallenge := marshalisland
+        AddToLog("Loading in Marshal Island Bounty")
+        UpdateGUI("Marshal Island Bounty")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 3040, 0, DoubleDungeonGodStatue)) {
+        CurrentChallenge := DoubleDungeonGodStatue
+        AddToLog("Loading in Double Dungeon God Statue Bounty")
+        UpdateGUI("Double Dungeon Bounty")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, DoubleDungeonBounty)) {
+        CurrentChallenge := DoubleDungeonGodStatue
+        AddToLog("Loading in Double Dungeon bounty")
+        UpdateGUI("Double Dungeon")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, PlanetNamekBounty)) {
+        CurrentChallenge := PlanetNamek
+        AddToLog("Loading in Planet Namek bounty")
+        UpdateGUI("Planet Namek")
+    } else {
+        CurrentChallenge := "Macro Broken"
+        AddToLog("Entered Bounty but couldn't find anything - leaving bounty")
+        BetterClick(445, 440) ; Leave
+        Sleep 200
+        return
+    }
+}
+
+
 StartChallenge() {
     loop {
         if (ok := FindText(&X, &Y, 87 - 150000, 295 - 150000, 87 + 150000, 295 + 150000, 0, 0, Create)) {
@@ -266,6 +309,34 @@ StartChallenge() {
             }
         }
     }
+}
+
+ChallengeAssign() {
+    global CurrentChallenge, CurrentChallengeMod
+    if (ok := FindText(&X, &Y, 121-150000, 199-150000, 121+150000, 199+150000, 0, 0, ShibuyaStation)) {
+        CurrentChallenge := ShibuyaStation
+        AddToLog("Loading in Shibuya Station challenge")
+        UpdateGUI("Shibuya Station")
+    } else if (ok := FindText(&X, &Y, 89-150000, 199-150000, 89+150000, 199+150000, 0, 0, marshalisland)) {
+        CurrentChallenge := marshalisland
+        AddToLog("Loading in Marshal Island")
+        UpdateGUI("Marshal Island")
+    } else if (ok := FindText(&X, &Y, 205 - 150000, 213 - 150000, 205 + 150000, 213 + 150000, 0, 0, Landofgods)) {
+        CurrentChallenge := Landofgods
+        AddToLog("Loading in Land of the Gods")
+        UpdateGUI("Land of the Gods")
+    } else if (ok := FindText(&X, &Y, 68-150000, 199-150000, 68+150000, 199+150000, 0, 0, DoubleDungeon)) {
+        CurrentChallenge := DoubleDungeonGodStatue
+        AddToLog("Loading in Double Dungeon challenge")
+        UpdateGUI("Double Dungeon")
+    } else {
+        CurrentChallenge := "Macro Broken"
+        AddToLog("Entered challenge but couldn't find anything - must restart")
+        BetterClick(235, 432) ; press leave button
+        Sleep 2000
+        return
+    }
+    global CurrentChallengeMod := ChallengeMods["TraitReroll"]
 }
 
 BetterClick(x, y) {

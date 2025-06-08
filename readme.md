@@ -70,9 +70,6 @@ classDiagram
 
 ---
 
-Bạn có thể copy đoạn trên và chèn vào `README.md` để hiển thị sơ đồ chức năng kiểu nối với nhau bằng Mermaid trên GitHub.
-
-
 ## 🎯 MỤC TIÊU
 
 - Tự động vào game và tạo phòng chơi
