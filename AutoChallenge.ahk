@@ -50,6 +50,125 @@ F4:: {
 
 }
 
+
+StartBounty() {
+    global LastResetTime, CurrentChallengeMod
+    ; Check if we need to reset (24 hours passed)
+    if (A_TickCount - LastResetTime >= 86400000) {
+        LastResetTime := A_TickCount
+    }
+    if (BountyCheck == 2) {
+        AddToLog("Daily bounty limit 10 reached! Starting infinite mode")
+        StartInf()
+        return
+    }
+    AddToLog("Starting Bounty")
+    loop {
+        Disconect()
+        if (ok := FindText(&X, &Y, 332 - 150000, 248 - 150000, 332 + 150000, 248 + 150000, 0, 0, reward)) {
+            break
+        }
+        Sleep 100
+        BetterClick(38, 346) ; click areas
+        Sleep 300
+        BetterClick(356, 388) ; click play
+        Sleep 300
+        BetterClick(658, 179)
+        sleep 300
+        AddToLog("Waiting for lobby")
+        loop {
+            Disconect()
+            sleep 100
+            if (ok := FindText(&X, &Y, 120 - 150000, 324 - 150000, 120 + 150000, 324 + 150000, 0, 0, store)) {
+                break
+            }
+        }
+        sleep 100
+        SendInput ("{w down}")
+        sleep 100
+        SendInput ("{shift down}")
+        Sleep 3000
+        SendInput ("{w up}")
+        sleep 100
+        SendInput ("{shift up}")
+        Sleep 100
+        SendInput ("{e up}")
+        Sleep 100
+        SendInput ("{e down}")
+        Sleep 200
+        SendInput ("{e up}")
+        KeyWait "e" ; Wait for "e" to be fully processed
+        SendInput ("{e up}")
+        Sleep 100
+        SendInput ("{e down}")
+        Sleep 200
+        SendInput ("{e up}")
+        KeyWait "e" ; Wait for "e" to be fully processed
+        loop 10 {
+            Disconect()
+            sleep 100
+            BetterClick(457, 469) ; bounties
+            if (ok := FindText(&X, &Y, 332 - 150000, 248 - 150000, 332 + 150000, 248 + 150000, 0, 0, reward)) {
+                break
+            }
+        }
+        sleep 100
+        SendInput ("{shift up}")
+        if (ok := FindText(&X, &Y, 332 - 150000, 248 - 150000, 332 + 150000, 248 + 150000, 0, 0, reward)) {
+            break
+        }
+    }
+
+    Sleep 100
+
+    if (ok := FindText(&X, &Y, 676 - 150000, 571 - 150000, 676 + 150000, 571 + 150000, 0, 0, ZeroBounty)) {
+        AddToLog("No Bounties left, playing inf")
+        global BountyCheck := 1
+        BetterClick(626, 599)
+        sleep 500
+        StartInf()
+    }
+    else if (ok := FindText(&X, &Y, 515 - 150000, 234 - 150000, 515 + 150000, 234 + 150000, 0, 0, LegendStage)) {
+        global CurrentChallengeMod := ChallengeMods["LegendStage"]
+        AddToLog("Legend Stage Bounty")
+    } else {
+        global CurrentChallengeMod := ChallengeMods["StoryMode"]
+        AddToLog("Story Mode Bounty")
+    }
+    BetterClick(746, 191) ; play
+    Sleep 200
+    if (ok := FindText(&X, &Y, 588 - 150000, 492 - 150000, 588 + 150000, 492 + 150000, 0, 0, BossStart)) {
+        Sleep 1000
+        BountyAssign()
+        Sleep 200
+        BetterClick(441, 477)   ; Start
+        Sleep 500
+        BetterClick(392, 313) ; Cancel warning capacity
+        Sleep 50
+        BetterClick(69, 498)    ; Start2
+        Sleep 100
+        BetterClick(87, 515)    ; Start3
+        sleep 200
+        BetterClick(409, 343)
+        sleep 200
+        BetterClick(75, 498)
+        IngameCheck(IngameStatus)
+    }
+    else {
+        AddToLog("No Bounty found")
+        TPtoLobby()
+        Sleep 5000
+        BetterClick(564, 477) ; Leave
+        Sleep 200
+        BetterClick(445, 445) ; Leave
+        Sleep 200
+        BetterClick(400, 100) ; Leave 2
+        Sleep 200
+        BetterClick(408, 135) ; Leave 2
+        StartInf()
+    }
+}
+
 StartChallenge() {
     loop {
         if (ok := FindText(&X, &Y, 87 - 150000, 295 - 150000, 87 + 150000, 295 + 150000, 0, 0, Create)) {
@@ -88,7 +207,7 @@ StartChallenge() {
     SendInput ("{shift up}")
     Sleep 50
     loop {
-        BetterClick(80, 280)	; createpress
+        BetterClick(80, 280)	; createpressW
         sleep 100
         if (ok := FindText(&X, &Y, 113, 352, 379, 462, 0, 0, regularchallenges)) {
             break
