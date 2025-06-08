@@ -12,6 +12,67 @@ Auto Challenge là một công cụ viết bằng AutoHotkey giúp người dùn
 
 ---
 
+## 📌 Sơ đồ chức năng tổng thể bằng Mermaid (kiểu nối với nhau)
+
+```mermaid
+classDiagram
+    class MacroSystem {
+        +start()
+        +stop()
+        +pause()
+        +restart()
+    }
+
+    class GUI {
+        +showStats()
+        +showLog()
+        +controlButtons()
+    }
+
+    class AutoChallenge {
+        +detectChallengeType()
+        +joinChallenge()
+        +completeChallenge()
+    }
+
+    class AutoFarm {
+        +selectMap()
+        +farmResources()
+        +upgradeUnits()
+    }
+
+    class FeatureManager {
+        +enableDiscordWebhook()
+        +handleReconnect()
+        +resizeWindow()
+        +saveUserSettings()
+    }
+
+    class DetectionSystem {
+        +detectSpawn()
+        +detectVictory()
+        +detectDisconnect()
+        +detectGameUI()
+    }
+
+    class HotkeyController {
+        +bindKey(key)
+        +onKeyPress(key)
+    }
+
+    MacroSystem --> GUI
+    MacroSystem --> AutoChallenge
+    MacroSystem --> AutoFarm
+    MacroSystem --> FeatureManager
+    MacroSystem --> DetectionSystem
+    MacroSystem --> HotkeyController
+```
+
+---
+
+Bạn có thể copy đoạn trên và chèn vào `README.md` để hiển thị sơ đồ chức năng kiểu nối với nhau bằng Mermaid trên GitHub.
+
+
 ## 🎯 MỤC TIÊU
 
 - Tự động vào game và tạo phòng chơi
