@@ -1,5 +1,7 @@
 #Requires AutoHotkey v2
 #Include %A_ScriptDir%\Lib\Discord-Webhook-master\lib\WEBHOOK.ahk
+#Include %A_ScriptDir%\AutoChallenge.ahk
+#Include %A_ScriptDir%\Lib\WebHookSetting.ahk
 
 DoDailyChallengeFile := "Lib\Settings\DoDailyChallenge.txt"
 
@@ -54,9 +56,11 @@ AddGUIElements() {
     ; Nút Settings với gradient style
     global SettingsBtn := MainGUI.Add("Button", "x380 y870 w130 h35 +0x1000", "⚙️ Settings")
     SettingsBtn.SetFont("s9 bold", "Segoe UI")
+    SettingsBtn.OnEvent("Click", (*) => OpenMainSettings())
     ; Nút Connect to PS với glow effect
     global ConnectBtn := MainGUI.Add("Button", "x600 y870 w150 h35 +0x1000", "🎮 Connect to PS")
     ConnectBtn.SetFont("s9 bold", "Segoe UI")
+    ConnectBtn.OnEvent("Click", (*) => Reconnecttops())
 
     ; Background chính cho Roblox (giữ nguyên)
     MainGUI.AddProgress("c0x23232b x8 y27 h602 w800 +E0x20000", 100) ; màu tối hơn, +E0x20000 để làm mờ (nếu hỗ trợ)
@@ -114,7 +118,11 @@ UpdateGUI(CurrentChal) {
 
 AddToLog(text) {
     global lastlog
+    SendActivityLogsStatus := FileRead(SendActivityLogsFile, "UTF-8")
     ActivityLog.Value := text "`n" ActivityLog.Value
+    if FileExist(SendActivityLogsFile) && (SendActivityLogsStatus = "1") {
+        lastlog := text
+    }
 }
 
 MinimizeGUI() {
@@ -192,6 +200,38 @@ UpdateRunTime() {
     }
 }
 
+ChallengeModUpdater() {
+    global CurrentChallengeMod
+
+    if (WeekendBox.Value){
+        if (CurrentChallengeMod.name = "TraitReroll") {
+            UpdateStats(0, 2000, 2, 0)
+        }
+        else if (CurrentChallengeMod.name = "StoryMode") {
+            UpdateStats(580, 100, 1, 1)
+        }
+        else if (CurrentChallengeMod.name = "LegendStage") {
+            UpdateStats(530, 75, 1, 1)
+        }
+        else if (CurrentChallengeMod.name = "Infinity") {
+            UpdateStats(800, 750, 0, 0)
+        }
+    }
+    else {
+        if (CurrentChallengeMod.name = "TraitReroll") {
+            UpdateStats(0, 1000, 1, 0)
+        }
+        else if (CurrentChallengeMod.name = "StoryMode") {
+            UpdateStats(580, 100, 1, 1)
+        }
+        else if (CurrentChallengeMod.name = "LegendStage") {
+            UpdateStats(530, 75, 1, 1)
+        }
+        else if (CurrentChallengeMod.name = "Infinity") {
+            UpdateStats(800, 750, 0, 0)
+        }
+    }
+}
 
 DoDailyChallengeBox.OnEvent("Click", (*) => SaveDoDailyToFile())
 
