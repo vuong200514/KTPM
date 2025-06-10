@@ -338,9 +338,3 @@ ChallengeAssign() {
     }
     global CurrentChallengeMod := ChallengeMods["TraitReroll"]
 }
-
-BetterClick(x, y) {
-    MouseMove(x-8, y-31)
-    MouseMove(1, 0, , "R")
-    MouseClick("Left", -1, 0, , , , "R")
-}
