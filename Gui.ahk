@@ -2,6 +2,7 @@
 #Include %A_ScriptDir%\Lib\Discord-Webhook-master\lib\WEBHOOK.ahk
 #Include %A_ScriptDir%\AutoChallenge.ahk
 #Include %A_ScriptDir%\Lib\WebHookSetting.ahk
+#Include %A_ScriptDir%\Lib\MainSetting.ahk
 
 DoDailyChallengeFile := "Lib\Settings\DoDailyChallenge.txt"
 
