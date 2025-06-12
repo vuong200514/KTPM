@@ -2,6 +2,7 @@
 #Include %A_ScriptDir%\Lib\Discord-Webhook-master\lib\WEBHOOK.ahk
 #Include %A_ScriptDir%\AutoChallenge.ahk
 #Include %A_ScriptDir%\Lib\WebHookSetting.ahk
+#Include %A_ScriptDir%\Lib\MainSetting.ahk
 
 DoDailyChallengeFile := "Lib\Settings\DoDailyChallenge.txt"
 
@@ -67,7 +68,7 @@ AddGUIElements() {
     WinSetTransColor("0x23232b 220", MainGUI) ; mờ nhẹ
 
     MainGUI.SetFont("s12 bold", "Segoe UI")
-    global TitleText := MainGUI.Add("Text", "x8 y5 w800 c0xFFD700 +Center +BackgroundTrans", "✨ Nhom 9 Auto Challenge ✨")
+    global TitleText := MainGUI.Add("Text", "x8 y5 w800 c0xFFD700 +Center +BackgroundTrans", "✨ Nhom9 Auto Challenge ✨")
 
     ; ========== CÁC PHẦN MỚI ĐƯỢC DI CHUYỂN XUỐNG DƯỚI ==========
     MainGUI.SetFont("s8", "Segoe UI") ; đồng bộ font nhỏ

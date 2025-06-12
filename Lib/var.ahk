@@ -4,6 +4,8 @@
 #Include %A_ScriptDir%\Lib\GUI.ahk
 #Include %A_ScriptDir%\Lib\Function.ahk
 #Include %A_ScriptDir%\Lib\WebHookSetting.ahk
+#Include %A_ScriptDir%\Lib\FindSpot.ahk
+#Include %A_ScriptDir%\Lib\BeatStage.ahk
 SendMode "Event"
 
 global MacroStartTime := A_TickCount
