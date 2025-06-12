@@ -11,6 +11,16 @@ checkingame := "|<>*137$27.10U8A6MlCsn79n6QFD1kUNw"
 telefail := "|<>*171$18.01UDVUMlUkNUk9Xk9aUBgk9skNwkNaMlWDVXU"
 id17 := "|<>*165$34.0WNW4E4A2Am0TlsnD10QV8U6127X8"
 telefailed2 := "|<>*149$52.0RllllnVU1zb77DaD3zkQQQ0MwDw0llk1bkzXX77DyD3yAASQSssU"
+tab1 := "|<>*68$10.DkS8lkDVy7kCAFsDm"
+tab2 := "|<>*108$13.3EgfKE38xhO6VU"
+cancel := "|<>*139$46.Ns30M60lVUA1UMX6QMnYT2ADlnCFw0k1UAtUMz8"
+vote := "|<>*66$47.Y03020018QD9611000C0C00042QEwkW8"
+vote2 := "|<>*33$23.zzDzA08O000q111i007E"
+card1 := "|<>*33$41.zzzzzv7zzzzzyA104M100000k00IkH1UkHdUaG1UbH1AU313"
+card2 := "|<>*16$45.040FU400000A0044kH1UkHUa2N862S4kH80kEo"
+falsecheck := "|<>*130$26.280wkU0D8141WEHW1iAsUPX0ACU"
+yescheck := "|<>*109$13.nzn61014UUEMEA4E"
+
 CheckLB() {
     if (ok := FindText(&X, &Y, 590, 108, 649, 150, 0, 0, LBCheck)) {
         AddToLog("Leaderboard late load in detected, closing")
@@ -56,6 +66,19 @@ AntiSoftlock() {
         BetterClick(573, 125) ; close settings
         Sleep 200
 
+    }
+    Disconect()
+}
+
+AntiSoftlock2() {
+    if (ok := FindText(&X, &Y, 205, 104, 659, 508, 0, 0, OkayButton)) {
+        BetterClick(X, Y)
+    }
+    if (ok := FindText(&X, &Y, 272, 269, 586, 405, 0, 0, CancelText)) {
+        BetterClick(X, Y)
+        Sleep 200
+        BetterClick(573, 125) ; close settings
+        Sleep 200
     }
     Disconect()
 }
@@ -107,6 +130,60 @@ PlaceUnitCheck(x, y, slot) {
     }
 }
 
+PlaceUnit2(x, y, slot) {
+    if (ok:=FindText(&A, &B, 676-150000, 119-150000, 676+150000, 119+150000, 0, 0, lbcheckk) || ok:=FindText(&A, &B, 599-150000, 119-150000, 599+150000, 119+150000, 0, 0, lbcheckk4)) {
+        CloseLB(A, B)
+    }
+    SendInput(slot)
+    Sleep 500
+    BetterClick(x, y)
+    Sleep 50
+    SendInput("q")
+}
+
+PlaceUnitCheck2(x, y, slot) {
+    AddToLog("Placing unit")
+    loop {
+        Disconect()
+        if (ok := FindText(&X, &Y, 223, 339, 402, 389, 0, 0, EndScreen)) {
+            AddToLog("Found return to lobby button")
+            EndscreenFuncs()
+            return
+        }
+        else {
+            PlaceUnit2(x, y, slot)
+            sleep 1000
+            if (ok := FindText(&X, &Y, 77 - 150000, 417 - 150000, 77 + 150000, 417 + 150000, 0, 0, placed)) {
+                Antisoftlock()
+                BetterClick(400,620)
+                break ; Exit loop
+            }
+        }
+    }
+}
+
+UpgradeUnit2(x, y) {
+    BetterClick(x, y)
+    Sleep 50
+    SendInput("t")
+}
+
+ChangePriority(x, y, n) {
+    AddToLog("Changing Priority")
+    loop n {
+        Disconect()
+        if (ok := FindText(&X, &Y, 223, 339, 402, 389, 0, 0, EndScreen)) {
+            AddToLog("Found return to lobby button")
+            EndscreenFuncs()
+            return
+        }
+        else
+            BetterClick(x, y)
+        Sleep 200
+        SendInput("r")
+    }
+}
+
 UpgradeFarm(x, y) {
     AddToLog("Upgrading Farms")
     loop {
@@ -127,6 +204,123 @@ UpgradeFarm(x, y) {
     }
 }
 
+UpgradeFarm2(x, y) {
+    AddToLog("Upgrading Farms")
+    loop {
+        Disconect()
+        if (ok := FindText(&X, &Y, 223, 339, 402, 389, 0, 0, EndScreen)) {
+            AddToLog("Found return to lobby button")
+            EndscreenFuncs()
+            return
+        }
+        else
+            BetterClick(x+1, y+1)
+        sleep 200
+        SendInput("t")
+        Sleep 1000
+        if (ok := FindText(&X, &Y, 245-150000, 396-150000, 245+150000, 396+150000, 0, 0, MAXXED)) {
+            break ; Exit loop
+        }
+    }
+}
+
+UpgradeDps(x, y) {
+    AddToLog("Upgrading DPS Units")
+    loop {
+        Disconect()
+        if (ok := FindText(&X, &Y, 342 - 150000, 135 - 150000, 342 + 150000, 135 + 150000, 0, 0, EndScreen)) {
+            AddToLog("Found return to lobby button")
+            EndscreenFuncs()
+            return
+        }
+        else
+            BetterClick(x+27, y+15)
+        SendInput("t")
+        Sleep 500
+    }
+}
+wincheck:="|<>*131$37.0zzzzzyPAUwCD0a0A27W004N3l0Am06lk6N7m0sbAk8E"
+canup:="|<>*130$41.vs0000Tzs0000xxzDzzvVnzzzzz3bzzzzy7A60210CMA0420Qn30lUktY21m1071U3UE8S7UjUkTwznzzzztw7zzzzrwzzzy"
+UpgradeDps2(x, y, n) {
+    AddToLog("Upgrading DPS Units")
+    i := 0
+    sleep 500
+    BetterClick(x, y)
+    while (i < n) {
+        sleep 500
+        Disconect()
+        if (ok := FindText(&X, &Y, 342 - 150000, 135 - 150000, 342 + 150000, 135 + 150000, 0, 0, EndScreen)) {
+            AddToLog("Found return to lobby button")
+            EndscreenFuncs()
+            return
+        }
+        else {
+            if (ok:=FindText(&X, &Y, 190-150000, 397-150000, 190+150000, 397+150000, 0, 0, canup)) {
+                SendInput("t")
+                Sleep 500
+                i++
+            }
+        }
+        if (ok:=FindText(&X, &Y, 476-150000, 322-150000, 476+150000, 322+150000, 0, 0, wincheck)) {
+            AddToLog("Found win change to collect mode")
+            loop {
+                BetterClick(400,620)
+                if (ok := FindText(&X, &Y, 342 - 150000, 135 - 150000, 342 + 150000, 135 + 150000, 0, 0, EndScreen)) {
+                    AddToLog("Found return to lobby button")
+                    EndscreenFuncs()
+                    return
+                }
+            }
+        }
+    }
+}
+
+UpgradeDpsSkill(x, y, n) {
+    AddToLog("Upgrading DPS Units")
+    i := 0
+    j := 0
+    sleep 500
+    BetterClick(x, y)
+    while (i < n) {
+        sleep 500
+        Disconect()
+        if (ok := FindText(&X, &Y, 342 - 150000, 135 - 150000, 342 + 150000, 135 + 150000, 0, 0, EndScreen)) {
+            AddToLog("Found return to lobby button")
+            EndscreenFuncs()
+            return
+        }
+        else {
+            if (ok:=FindText(&X, &Y, 190-150000, 397-150000, 190+150000, 397+150000, 0, 0, canup)) {
+                SendInput("t")
+                Sleep 500
+                i++
+            }
+        }
+        if (i = 10 && j = 0) {
+            sleep 200
+            BetterClick(318, 292)
+            sleep 200
+            BetterClick(373, 292)
+            Sleep 200
+            BetterClick(712, 454)
+            Sleep 200
+            BetterClick(715, 168)
+            j  := 1
+        }
+        if (ok:=FindText(&X, &Y, 476-150000, 322-150000, 476+150000, 322+150000, 0, 0, wincheck)) {
+            AddToLog("Found win change to collect mode")
+            loop {
+                Disconect()
+                BetterClick(400,620)
+                if (ok := FindText(&X, &Y, 342 - 150000, 135 - 150000, 342 + 150000, 135 + 150000, 0, 0, EndScreen)) {
+                    AddToLog("Found return to lobby button")
+                    EndscreenFuncs()
+                    return
+                }
+            }
+        }
+    }
+}
 
 RestartMatch() {
     BetterClick(27, 610) ; settings

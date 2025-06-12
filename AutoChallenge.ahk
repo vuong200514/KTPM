@@ -1,5 +1,13 @@
-﻿#Requires AutoHotkey v2.0
+﻿#Include %A_ScriptDir%\Lib\FindText.ahk
+#Include %A_ScriptDir%\Lib\Discord-Webhook-master\lib\WEBHOOK.ahk
+#Include %A_ScriptDir%\Lib\AHKv2-Gdip-master\Gdip_All.ahk
+#Include %A_ScriptDir%\Lib\gui.ahk
+#Include %A_ScriptDir%\Lib\Function.ahk
+#Include %A_ScriptDir%\Lib\WebHookSetting.ahk
+#Include %A_ScriptDir%\Lib\FindSpot.ahk
+#Include %A_ScriptDir%\Lib\BeatStage.ahk
 #Include %A_ScriptDir%\Lib\var.ahk
+SendMode "Event"
 
 F1:: {
     if WinExist(RobloxWindow) {
@@ -29,27 +37,44 @@ InitializeMacro() {
     }
     global startTime := A_TickCount
 
+    loop {
+        Disconect()
+        if (ok:=FindText(&X, &Y, 127-150000, 80-150000, 127+150000, 80+150000, 0, 0, gamecheck)) {
+            break
+        }
+    }
+    StartChallenge()
 
 }
 
 F3:: {
-    ;stop the macro
+    StopMacro()
 }
 
 F4:: {
     if paused {
         global paused := false
+        AddToLog("Unpaused")
         Pause(false)
         return
     }
     else {
         global paused := true
+        AddToLog("Paused")
         Pause(true)
         return
     }
 
 }
 
+F5:: {
+     BeatStageDungeon()
+}
+
+F6:: {
+   CurrentChallenge := EdgeOfHeaven
+   PlayEdgeofHeaven()
+}
 
 StartBounty() {
     global LastResetTime, CurrentChallengeMod
@@ -202,18 +227,57 @@ BountyAssign() {
         CurrentChallenge := PlanetNamek
         AddToLog("Loading in Planet Namek bounty")
         UpdateGUI("Planet Namek")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, ShibuyaAftermathBounty)) {
+        CurrentChallenge := ShibuyaAftermathBounty
+        AddToLog("Loading in Shibuya Aftermath bounty")
+        UpdateGUI("Shibuya Aftermath Bounty")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, UndergroundChurchBounty)) {
+        CurrentChallenge := UnderGround
+        AddToLog("Loading in Under Ground bounty")
+        UpdateGUI("Under Ground")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, Castle) || ok := FindText(&X, &Y, 446-150000, 216-150000, 446+150000, 216+150000, 0, 0, Golden)) {
+        CurrentChallenge := Castle
+        AddToLog("Loading in Golden Castle bounty")
+        UpdateGUI("Golden Castle")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, SandVillageBounty)) {
+        CurrentChallenge := SandVillageBounty
+        AddToLog("Loading in Sand Village bounty")
+        UpdateGUI("Sand Village")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, Kuinshi1)) {
+        CurrentChallenge := Kuinshi
+        AddToLog("Loading in Kuinshi Palace bounty")
+        UpdateGUI("Kuinshi Palace")
+    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, Kuinshi)) {
+        CurrentChallenge := Kuinshi
+        AddToLog("Loading in Kuinshi Palace bounty")
+        UpdateGUI("Kuinshi Palace")
+    } else if (ok := FindText(&X, &Y, 526-150000, 219-150000, 526+150000, 219+150000, 0, 0, SpiritSocietyBounty)) {
+        CurrentChallenge := SpiritSociety
+        AddToLog("Loading in Spirit Society bounty")
+        UpdateGUI("Spirit Society Bounty")
+    } else if (ok := FindText(&X, &Y, 614 - 150000, 233 - 150000, 614 + 150000, 233 + 150000, 0, 0, Landofthegods)) {
+        CurrentChallenge := Landofthegods
+        AddToLog("Loading in Land Of The Gods Bounty")
+        UpdateGUI("Land Of The Gods Bounty")
     } else {
         CurrentChallenge := "Macro Broken"
         AddToLog("Entered Bounty but couldn't find anything - leaving bounty")
         BetterClick(445, 440) ; Leave
         Sleep 200
+        BetterClick(445, 445) ; Leave
+        Sleep 200
+        BetterClick(400, 100) ; Leave 2
+        Sleep 200
+        BetterClick(400, 105) ; Leave 2
+        Sleep 2000
+        StartInf()
         return
     }
 }
 
-
 StartChallenge() {
     loop {
+        Disconect()
         if (ok := FindText(&X, &Y, 87 - 150000, 295 - 150000, 87 + 150000, 295 + 150000, 0, 0, Create)) {
             break
         }
@@ -222,26 +286,27 @@ StartChallenge() {
         BetterClick(606, 285) ; click challenges
         Sleep 300
         BetterClick(657, 175)
+        AddToLog("Waiting before moving")
         loop {
+            Disconect()
             sleep 100
             if (ok := FindText(&X, &Y, 120 - 150000, 324 - 150000, 120 + 150000, 324 + 150000, 0, 0, store)) {
                 break
             }
         }
-        sleep 100
-        SendInput ("{shift up}")
-        Sleep 100
-        SendInput ("{shift down}")
-        sleep 50
         SendInput("{d up}") ; Ensure key is released
         Sleep 100
         SendInput ("{d down}")
+        sleep 50
+        SendInput ("{shift down}")
         Sleep 1800
         SendInput ("{d up}")
-        KeyWait "d" ; Wait for "d" to be fully processed
+        sleep 100
+        SendInput ("{shift up}")
     }
 
     loop {
+        Disconect()
         sleep 10
         if (ok := FindText(&X, &Y, 87 - 150000, 295 - 150000, 87 + 150000, 295 + 150000, 0, 0, Create)) {
             break
@@ -250,18 +315,30 @@ StartChallenge() {
     SendInput ("{shift up}")
     Sleep 50
     loop {
-        BetterClick(80, 280)	; createpressW
+        Disconect()
+        BetterClick(80, 280)	; createpress
         sleep 100
         if (ok := FindText(&X, &Y, 113, 352, 379, 462, 0, 0, regularchallenges)) {
             break
         }
-
     }
-    sleep 300
-    if (1 == 1 && ok := FindText(&X, &Y, 663 - 150000, 291 - 150000, 663 + 150000, 291 + 150000, 0, 0,
+
+    if (dodaily == 1) {
+        loop {
+            Disconect()
+            BetterClick(220, 310) ; daily click
+            sleep 100
+            if (ok := FindText(&X, &Y, 199 - 150000, 338 - 150000, 199 + 150000, 338 + 150000, 0, 0, dailychallenge)) {
+                break
+            }
+        }
+    }
+    if (dodaily == 1 && ok := FindText(&X, &Y, 663 - 150000, 291 - 150000, 663 + 150000, 291 + 150000, 0, 0,
         challengecheck)) {
+        AddToLog("Attempting Daily Challenge")
         BetterClick(630, 265) ; Click trait reroll
         loop {
+            Disconect()
             sleep 100
             BetterClick(400, 320)
             sleep 100
@@ -277,6 +354,7 @@ StartChallenge() {
             }
         }
         loop {
+            Disconect()
             sleep 500
             BetterClick(400, 320)
             sleep 500
@@ -284,27 +362,37 @@ StartChallenge() {
                 break
             }
         }
+        ChallengeAssign()
         BetterClick(100, 500)	; startpress
         sleep 300
         BetterClick(100, 500)	; startpress
+        IngameCheck(IngameStatus)
     }
     else {
         loop {
+            Disconect()
             if (ok := FindText(&X, &Y, 662 - 150000, 272 - 150000, 662 + 150000, 272 + 150000, 0, 0, regular)) {
                 if (ok := FindText(&X, &Y, 663 - 150000, 291 - 150000, 663 + 150000, 291 + 150000, 0, 0, challengecheck
                 )) {
+                    AddToLog("Attempting Trait Reroll Challenge")
                     BetterClick(637, 297) ; Click trait reroll
                     loop {
+                        Disconect()
                         if (ok := FindText(&X, &Y, 229 - 150000, 286 - 150000, 229 + 150000, 286 + 150000, 0, 0,
                             rewardchallenge)) {
                             break
                         }
                     }
+                    ChallengeAssign()
+                    BetterClick(67, 464)	; startpress
+                    IngameCheck(IngameStatus)
                 }
                 else {
+                    AddToLog("Played Challenge")
                     BetterClick(692, 163)
                     sleep 500
                     BetterClick(407, 135)
+                    StartBounty()
                 }
             }
         }
@@ -329,12 +417,123 @@ ChallengeAssign() {
         CurrentChallenge := DoubleDungeonGodStatue
         AddToLog("Loading in Double Dungeon challenge")
         UpdateGUI("Double Dungeon")
+    } else if (ok := FindText(&X, &Y, 89-150000, 198-150000, 89+150000, 198+150000, 0, 0, UnderGround)) {
+        CurrentChallenge := UnderGround
+        AddToLog("Loading in Under Ground challenge")
+        UpdateGUI("Under Ground")
+    } else if (ok := FindText(&X, &Y, 166-150000, 164-150000, 166+150000, 164+150000, 0, 0,
+        ShibuyaAftermathchallenge)) {
+        CurrentChallenge := ShibuyaAftermathBounty
+        AddToLog("Loading in Shibuya Aftermath")
+        UpdateGUI("Shibuya Aftermath")
+    } else if (ok := FindText(&X, &Y, 147-150000, 198-150000, 147+150000, 198+150000, 0, 0, Castlechallenge) || ok := FindText(&X, &Y, 97 - 150000,
+        144 - 150000, 97 + 150000, 144 + 150000, 0, 0, Golden)) {
+        CurrentChallenge := Castle
+        AddToLog("Loading in Golden Castle")
+        UpdateGUI("Golden Castle")
+    } else if (ok := FindText(&X, &Y, 70 - 150000, 212 - 150000, 70 + 150000, 212 + 150000, 0, 0, KuinshiChallenge)) {
+        CurrentChallenge := Kuinshi
+        AddToLog("Loading in Kuinshi Palace")
+        UpdateGUI("Kuinshi Palace")
+    } else if (ok := FindText(&X, &Y, 63-150000, 197-150000, 63+150000, 197+150000, 0, 0, SandVillage)) {
+        CurrentChallenge := SandVillageBounty
+        AddToLog("Loading in Sand Village challenge")
+        UpdateGUI("Sand Village")
+    } else if (ok := FindText(&X, &Y, 145-150000, 199-150000, 145+150000, 199+150000, 0, 0, PlanetNamek)) {
+        CurrentChallenge := PlanetNamek
+        AddToLog("Loading in Planet Namek challenge")
+        UpdateGUI("Planet Namek")
+    } else if (ok := FindText(&X, &Y, 75-150000, 199-150000, 75+150000, 199+150000, 0, 0, SpiritSociety)) {
+        CurrentChallenge := SpiritSociety
+        AddToLog("Loading in Spirit Society challenge")
+        UpdateGUI("Spirit Society")
+    } else if ((ok:=FindText(&X, &Y, 75-150000, 199-150000, 75+150000, 199+150000, 0, 0, EdgeOfHeaven))) {
+        CurrentChallenge := EdgeOfHeaven
+        AddToLog("Loading in Edge of Heaven challenge")
+        UpdateGUI("Edge of Heaven")
     } else {
         CurrentChallenge := "Macro Broken"
         AddToLog("Entered challenge but couldn't find anything - must restart")
         BetterClick(235, 432) ; press leave button
         Sleep 2000
+        StartInf()
         return
     }
     global CurrentChallengeMod := ChallengeMods["TraitReroll"]
+}
+
+StartInf() {
+    global CurrentChallenge
+    AddToLog("Going to infinite")
+    CurrentChallenge := "UnderGround Infinite"
+    global CurrentChallengeMod := ChallengeMods["Infinity"]
+    UpdateGUI(CurrentChallenge)
+    Sleep 100
+    loop {
+        Disconect()
+        if (ok := FindText(&X, &Y, 87 - 150000, 295 - 150000, 87 + 150000, 295 + 150000, 0, 0, Create)) {
+            break
+        }
+        BetterClick(95, 294) ; click play
+        sleep 300
+        BetterClick(158, 335) ; click teleport
+        Sleep 200
+        AddToLog("Waiting before moving")
+        loop {
+            Disconect()
+            sleep 100
+            if (ok := FindText(&X, &Y, 120 - 150000, 324 - 150000, 120 + 150000, 324 + 150000, 0, 0, store)) {
+                break
+            }
+        }
+        SendInput ("{shift up}")
+        sleep 100
+        SendInput ("{shift down}")
+        sleep 50
+        SendInput ("{s down}")
+        Sleep 2500
+        SendInput ("{s up}")
+        KeyWait "s" ; Wait for "s" to be fully processed
+
+        SendInput("{d up}") ; Ensure key is released
+        Sleep 100
+        SendInput ("{d down}")
+        Sleep 2000
+        SendInput ("{d up}")
+        KeyWait "d" ; Wait for "d" to be fully processed
+        SendInput ("{shift up}")
+    }
+    SendInput ("{shift up}")
+
+    ; Loop until the CreateMatch is found
+    while (true) {
+        if (ok := FindText(&X, &Y, 40, 270, 190, 312, 0, 0, CreateMatch)) {
+            BetterClick(82, 276) ; CreateMatch
+            Sleep 500
+            BetterClick(148, 422) ; select underground
+            Sleep 300
+            BetterClick(311, 275) ; select sandbox
+            Sleep 300
+            loop 3 {
+                Sleep 50
+                SendInput("{WheelDown 10}") ; scroll down
+            }
+            Sleep 800
+            BetterClick(312, 430) ; select inf
+            Sleep 1000
+            BetterClick(560, 445) ; Start
+            Sleep 1000
+            if (ok := FindText(&X, &Y, 415 - 150000, 358 - 150000, 415 + 150000, 358 + 150000, 0, 0, Cancell)) {
+                AddToLog("Cancelled max cap")
+                BetterClick(407, 342) ; Click cancel
+                sleep 500
+            }
+            BetterClick(68, 460) ; Start2
+            IngameCheck(IngameStatus)
+            break
+        }
+        else {
+            Sleep 100
+        }
+    }
 }

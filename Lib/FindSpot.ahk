@@ -4,6 +4,7 @@
 #Include %A_ScriptDir%\Lib\FindText.ahk
 #Include %A_ScriptDir%\Lib\Function.ahk
 #Include %A_ScriptDir%\Lib\AHKv2-Gdip-master\Gdip_All.ahk
+#Include %A_ScriptDir%\Lib\BeatStage.ahk
 
 namekright4 :=
     "|<>*64$29.0zzzy0zzzw1zzzs1zzzk1zzzU1zzz03zzy03zzw03zzs03zzs07zzk07zzU07zzU07zz00Dzy00Dzy00Dzw00Dzs00Tzs00Tzk00TzU00TzU00zz000zy000zy000zw000zs001zs001zz001zzzk1"
@@ -42,6 +43,30 @@ sandcancell := "|<>*120$23.21k0410ElUMVU8lnbs210k0U"
 RobloxWindow := "ahk_exe RobloxPlayerBeta.exe"
 
 
+PlaySand() {
+    AddToLog("Waiting for Sand map to load in...")
+    loop {
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            BetterClick(385, 471) ; Replay
+        }
+        Disconect()
+        sleep 100
+        if (ok := FindText(&X, &Y, 454 - 150000, 526 - 150000, 454 + 150000, 526 + 150000, 0, 0, checkingame) || ok :=
+        FindText(&X, &Y, 457 - 150000, 526 - 150000, 457 + 150000, 526 + 150000, 0, 0, checkingame2) || ok := FindText(&
+            X, &Y, 457 - 150000, 526 - 150000, 457 + 150000, 526 + 150000, 0, 0, checkingame3)) {
+            break
+        }
+    }
+    BetterClick(572, 103) ; close lb
+    Sleep 100
+    LookDown()
+    Sleep 500
+    BetterClick(371, 154) ; Press yes
+    Sleep 500
+    AddToLog("Placing Speedwagon to set-up cam")
+    PlacespeedoSand()
+}
+
 PlayMarshalisland() {
     loop {
         Disconect()
@@ -49,7 +74,7 @@ PlayMarshalisland() {
         if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
             BetterClick(385, 471) ; Replay
             sleep 2000
-
+            Placespeedo()
         }
         else {
             TPtoSpawn()
@@ -71,7 +96,107 @@ PlayMarshalisland() {
             sleep 500
             KeyWait "a" ; Wait for "a" to be fully processed
             AddToLog("Cam is set-up, beating stage")
+            BeatStage()
+        }
+    }
+}
 
+PlayLandofTheGod() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            Sleep 200
+            SendInput ("{a up}")
+            Sleep 100
+            SendInput ("{a down}")
+            Sleep 3000
+            SendInput ("{a up}")
+            Sleep 200
+            SendInput ("{s up}")
+            Sleep 100
+            SendInput ("{s down}")
+            Sleep 1000
+            SendInput ("{s up}")
+            RestartMatch()
+            Sleep 200
+            CardSelector()
+            Sleep 500
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
+        }
+    }
+}
+
+PlayDungeonGodStatue() {
+    loop {
+        Disconect()
+        CheckLB()
+
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            RestartMatch()
+            Sleep 200
+            BetterClick(400, 330) ; Click incase it restart before wave 1
+            Sleep 500
+            SendInput ("{a up}")
+            Sleep 100
+            SendInput ("{a down}")
+            Sleep 2000
+            SendInput ("{a up}")
+            BetterClick(406, 342)  ; click modifer card
+            Sleep 200
+            BetterClick(406, 342)  ; click modifer card
+            Sleep 200
+            BetterClick(400, 310) ; cancel incase it missed
+            Sleep 200
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            KeyWait "a" ; Wait for "a" to be fully processed
+            AddToLog("Cam is set-up, beating stage")
+            BeatStageDungeon()
+        }
+    }
+}
+
+PlayCastle() {
+    loop {
+        Disconect()
+        CheckLB()
+
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            RestartMatch()
+            CardSelector()
+            Sleep 500
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
         }
     }
 }
@@ -84,7 +209,7 @@ PlayKuinshi() {
         if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
             Sleep 500
             BetterClick(385, 471) ; Replay
-
+            Placespeedo()
         }
         else {
             Sleep 1000
@@ -97,7 +222,7 @@ PlayKuinshi() {
                 BetterClick(371, 154) ; Press yes
                 sleep 500
                 AddToLog("Cam is set-up, beating stage")
-
+                BeatStage()
                 Sleep 500
             }
             else {
@@ -108,7 +233,7 @@ PlayKuinshi() {
                     if !(ok := FindText(&X, &Y, 613 - 150000, 471 - 150000, 613 + 150000, 471 + 150000, 0, 0,
                         RewardsFailed)) {
                         AddToLog("Found Fail Menu, Retrying")
-
+                        Placespeedo()
                     }
                 }
                 else {
@@ -132,7 +257,7 @@ PlayNamek() {
             Sleep 500
             BetterClick(385, 471) ; Replay
             sleep 2000
-
+            Placespeedo()
         }
         else {
             Sleep 1000
@@ -147,7 +272,7 @@ PlayNamek() {
                 Sleep 500
                 VoteStart() ; Press yes
                 AddToLog("Cam is set-up, beating stage")
-
+                BeatStage()
                 Sleep 500
             }
             else {
@@ -169,6 +294,448 @@ PlayNamek() {
                 }
 
             }
+        }
+    }
+}
+
+PlayShibuya() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 471 - 150000, 173 - 150000, 471 + 150000, 173 + 150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            RestartMatch()
+            Sleep 200
+            BetterClick(400, 330) ; Click incase it restart before wave 1
+            sleep 500
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BetterClick(406, 342)  ; click modifer card
+            Sleep 500
+            BetterClick(406, 342)  ; click modifer card
+            BeatStage()
+
+        }
+    }
+}
+
+shibuyaright2 :=
+    "|<>*52$32.zzzzwDzzzy3zzzz0zzzzUDzzzk7zzzs3zzzw1zzzy1zzzz0zzzzUTzzzkDzzzs7zzzs3zzzw1zzzy0zzzz0TzzzUDzzzk7zzzs3zzzw1zzzy1zzzz0zzzzUTzzzkDzzzk7zzzs3zzzw1zzzz0zzzzkTzzzwDzzzz7zzzznzzzzxzzzzzU"
+
+PlayShibuyaAfterMath() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            Sleep 1000
+            AddToLog("Checking if in the right spawn")
+            if (ok := FindText(&X, &Y, 270 - 150000, 159 - 150000, 270 + 150000, 159 + 150000, 0, 0,
+                shibuyaaftermathrightplace) || ok := FindText(&X, &Y, 580 - 150000, 501 - 150000, 580 + 150000, 501 +
+                    150000, 0, 0, shibuyaright2)) {
+                RestartMatch()
+                CardSelector()
+                Sleep 500
+                BetterClick(371, 154) ; Press yes
+                sleep 500
+                AddToLog("Cam is set-up, beating stage")
+                BeatStage()
+                Sleep 500
+
+            }
+            else {
+                if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+                    Sleep 500
+                    BetterClick(385, 471) ; Replay
+                    Sleep 2000
+                    if !(ok := FindText(&X, &Y, 613 - 150000, 471 - 150000, 613 + 150000, 471 + 150000, 0, 0,
+                        RewardsFailed)) {
+                        AddToLog("Found Fail Menu, Retrying")
+                        Placespeedo()
+                    }
+                }
+                else {
+                    AddToLog("Wrong spawn, trying again")
+                    TPtoSpawn()
+                    Sleep 600
+                    Changecamera()
+                }
+
+            }
+        }
+    }
+}
+
+PlayShibuyaBounty() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            sleep 500
+            RestartMatch()
+            Sleep 200
+            BetterClick(371, 154) ; Press yes
+            Sleep 200
+            BetterClick(400, 330) ; Click incase it restart before wave 1
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
+
+        }
+    }
+}
+TestfixSandFarm() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 525 - 150000, 325 - 150000, 525 + 150000, 325 + 150000, 0, 0, sandcancell)) {
+            BetterClick(400, 310) ; cancell
+        }
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            PlacespeedoSandFarm()
+        }
+        else {
+            Sleep 1500
+            AddToLog("Checking if in the right spawn")
+            if (ok:=FindText(&X, &Y, 686-150000, 455-150000, 686+150000, 455+150000, 0, 0, sandright) ||
+                ok:=FindText(&X, &Y, 560-150000, 212-150000, 560+150000, 212+150000, 0, 0, sandright2)) {
+                BetterClick(400, 330) ; Click incase it restart before wave 1
+                sleep 500
+                SendInput ("{w up}")
+                Sleep 100
+                SendInput ("{w down}")
+                Sleep 2500
+                SendInput ("{w up}")
+                KeyWait "w" ; Wait for "w" to be fully processed
+                Sleep 500
+                SendInput ("{d up}")
+                Sleep 100
+                SendInput ("{d down}")
+                Sleep 2500
+                SendInput ("{d up}")
+                KeyWait "d" ; Wait for "w" to be fully processed
+                Sleep 500
+                SendInput ("{s up}")
+                Sleep 100
+                SendInput ("{s down}")
+                Sleep 1000
+                SendInput ("{s up}")
+                KeyWait "s" ; Wait for "w" to be fully processed
+                Sleep 500
+                RestartMatch()
+                Sleep 500
+                if (ok := FindText(&X, &Y, 379, 205, 488, 255, 0, 0, Startercard)) {
+                    CardSelector()
+                    Sleep 500
+                    BetterClick(371, 154) ; Press yes
+                    sleep 500
+                    AddToLog("Cam is set-up, beating stage")
+                    BeatStage()
+                }
+                else {
+                    BetterClick(406, 342)  ; click modifer card
+                    Sleep 500
+                    BetterClick(405, 310) ; close restart
+                    Sleep 500
+                    BetterClick(371, 154) ; Press yes
+                    sleep 500
+                    AddToLog("Cam is set-up, beating stage")
+                    BeatStage()
+                    Sleep 500
+                }
+            }
+            else {
+                if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+                    Sleep 500
+                    BetterClick(385, 471) ; Replay
+                    Sleep 2000
+                    if !(ok := FindText(&X, &Y, 613 - 150000, 471 - 150000, 613 + 150000, 471 + 150000, 0, 0,
+                        RewardsFailed)) {
+                        AddToLog("Found Fail Menu, Retrying")
+                        PlacespeedoSandFarm()
+                    }
+                }
+                else {
+                    AddToLog("Wrong spawn, trying again")
+                    TPtoSpawn()
+                    Sleep 500
+                    Changecamera()
+                }
+            }
+        }
+    }
+}
+
+TestfixSand() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            PlacespeedoSand()
+        }
+        else {
+            Sleep 1000
+            AddToLog("Checking if in the right spawn")
+            if (ok:=FindText(&X, &Y, 455-150000, 91-150000, 455+150000, 91+150000, 0, 0, sandright) ||
+                ok:=FindText(&X, &Y, 560-150000, 212-150000, 560+150000, 212+150000, 0, 0, sandright2)) {
+                RestartMatch()
+                Sleep 200
+                BetterClick(400, 330) ; Click incase it restart before wave 1
+                sleep 500
+                SendInput ("{w up}")
+                Sleep 100
+                SendInput ("{w down}")
+                Sleep 2500
+                SendInput ("{w up}")
+                KeyWait "w" ; Wait for "w" to be fully processed
+                Sleep 500
+                SendInput("{d up}") ; Ensure key is released
+                Sleep 100
+                SendInput ("{d down}")
+                Sleep 4000
+                SendInput ("{d up}")
+                KeyWait "d" ; Wait for "d" to be fully processed}
+                Sleep 500
+                SendInput("{s up}") ; Ensure key is released
+                Sleep 100
+                SendInput ("{s down}")
+                Sleep 2000
+                SendInput ("{s up}")
+                KeyWait "s" ; Wait for "d" to be fully processed}
+                BetterClick(406, 342)  ; click modifer card
+                Sleep 500
+                BetterClick(406, 342)  ; click modifer card
+                Sleep 200
+                BetterClick(400, 310) ; cancel incase it missed
+                Sleep 200
+                BetterClick(371, 154) ; Press yes
+                sleep 500
+                BeatStage()
+                Sleep 500
+            }
+            else {
+                if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+                    Sleep 500
+                    BetterClick(385, 471) ; Replay
+                    Sleep 2000
+                    if !(ok := FindText(&X, &Y, 613 - 150000, 471 - 150000, 613 + 150000, 471 + 150000, 0, 0,
+                        RewardsFailed)) {
+                        AddToLog("Found Fail Menu, Retrying")
+                        PlacespeedoSand()
+                    }
+                }
+                else {
+                    AddToLog("Wrong spawn, trying again")
+                    TPtoSpawn()
+                    Sleep 600
+                    Changecamera()
+                }
+
+            }
+        }
+    }
+}
+
+PlayDungeon() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            RestartMatch()
+            Sleep 200
+            BetterClick(400, 330) ; Click incase it restart before wave 1
+            sleep 500
+            BetterClick(406, 342)  ; click modifer card
+            Sleep 200
+            BetterClick(400, 310) ; cancel incase it missed
+            Sleep 200
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
+
+        }
+    }
+}
+
+PlaySpirit() {
+    loop {
+        Disconect()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            if (ok := FindText(&X, &Y, 651 - 150000, 569 - 150000, 651 + 150000, 569 + 150000, 0, 0, spiritrightplace)) {
+                RestartMatch()
+                Sleep 200
+                BetterClick(400, 330) ; Click incase it restart before wave 1
+                sleep 500
+                BetterClick(406, 342)  ; click modifer card
+                Sleep 500
+                BetterClick(406, 342)  ; click modifer card
+                Sleep 200
+                BetterClick(400, 310) ; cancel incase it missed
+                Sleep 200
+                BetterClick(371, 154) ; Press yes
+                sleep 500
+                AddToLog("Cam is set-up, beating stage")
+                BeatStage()
+                Sleep 500
+
+            }
+            else {
+                if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+                    Sleep 500
+                    BetterClick(385, 471) ; Replay
+                    Sleep 2000
+                    if !(ok := FindText(&X, &Y, 613 - 150000, 471 - 150000, 613 + 150000, 471 + 150000, 0, 0,
+                        RewardsFailed)) {
+                        AddToLog("Found Fail Menu, Retrying")
+                        Placespeedo()
+                    }
+                }
+                else {
+                    AddToLog("Wrong spawn, trying again")
+                    TPtoSpawn()
+                    Sleep 600
+                    Changecamera()
+                }
+            }
+        }
+    }
+}
+
+PlayUnderground() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            RestartMatch()
+            Sleep 200
+            BetterClick(400, 330) ; Click incase it restart before wave 1
+            Sleep 200
+            BetterClick(406, 342)  ; click modifer card
+            Sleep 500
+            BetterClick(406, 342)  ; click modifer card
+            Sleep 200
+            BetterClick(400, 310) ; cancel incase it missed
+            Sleep 200
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            Sleep 200
+            BetterClick(371, 154) ; Press yes
+            Sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
+        }
+    }
+}
+
+PlayUndergoundInf() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            Sleep 500
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            RestartMatch()
+            Sleep 200
+            BetterClick(400, 330) ; Click incase it restart before wave 1
+            sleep 500
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
+        }
+    }
+
+}
+
+PlayEdgeofHeaven() {
+    loop {
+        Disconect()
+        CheckLB()
+        if (ok := FindText(&X, &Y, 179-150000, 166-150000, 179+150000, 166+150000, 0, 0, RewardsFailed)) {
+            BetterClick(385, 471) ; Replay
+            sleep 2000
+            Placespeedo()
+        }
+        else {
+            TPtoSpawn()
+            Sleep 500
+            Changecamera()
+            Sleep 200
+            SendInput ("{d up}")
+            Sleep 100
+            SendInput ("{d down}")
+            Sleep 2000
+            SendInput ("{d up}")
+            Sleep 100
+            RestartMatch()
+            Sleep 200
+            CardSelector()
+            Sleep 500
+            BetterClick(371, 154) ; Press yes
+            sleep 500
+            AddToLog("Cam is set-up, beating stage")
+            BeatStage()
         }
     }
 }
@@ -215,7 +782,7 @@ PlacespeedoSandFarm() {
         PlaceUnit(420, 315, 2) ; Place Speed
         Sleep 500
         if (ok := FindText(&X, &Y, 471 - 150000, 173 - 150000, 471 + 150000, 173 + 150000, 0, 0, Placed)) {
-
+            TestfixSandFarm()
         }
         else {
             TPtoSpawn()
@@ -253,7 +820,7 @@ PlacespeedoSand() {
         PlaceUnit(427, 315, 2) ; Place Speed
         Sleep 500
         if (ok := FindText(&X, &Y, 471 - 150000, 173 - 150000, 471 + 150000, 173 + 150000, 0, 0, Placed)) {
-
+            TestfixSand()
         }
         else {
             TPtoSpawn()

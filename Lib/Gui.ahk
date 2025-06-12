@@ -22,7 +22,7 @@ DiscordImage := "Lib\Images\Discord-Logo.png"
 lastlog := ""
 
 ; Tạo GUI chính
-MainGUI := Gui("-Caption +Border +AlwaysOnTop", "Vuong-Auto-Challenge")
+MainGUI := Gui("-Caption +Border +AlwaysOnTop", "Nhom9-Auto-Challenge")
 MainGUI.BackColor := "3f3f44"
 MainGUI.SetFont("s10 bold", "Segoe UI")
 
@@ -67,7 +67,7 @@ AddGUIElements() {
     WinSetTransColor("0x23232b 220", MainGUI) ; mờ nhẹ
 
     MainGUI.SetFont("s12 bold", "Segoe UI")
-    global TitleText := MainGUI.Add("Text", "x8 y5 w800 c0xFFD700 +Center +BackgroundTrans", "✨ Vuong Auto Challenge ✨")
+    global TitleText := MainGUI.Add("Text", "x8 y5 w800 c0xFFD700 +Center +BackgroundTrans", "✨ Nhom 9 Auto Challenge ✨")
 
     ; ========== CÁC PHẦN MỚI ĐƯỢC DI CHUYỂN XUỐNG DƯỚI ==========
     MainGUI.SetFont("s8", "Segoe UI") ; đồng bộ font nhỏ
@@ -126,7 +126,7 @@ AddToLog(text) {
 }
 
 MinimizeGUI() {
-    WinMinimize("Vuong-Auto-Challenge")
+    WinMinimize("Nhom9-Auto-Challenge")
 }
 
 UpdateStats(newGems := 0, newGold := 0, newRerolls := 0, newBounties := 0) {
