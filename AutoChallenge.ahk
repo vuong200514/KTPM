@@ -68,12 +68,13 @@ F4:: {
 }
 
 F5:: {
-     BeatStageDungeon()
+     BountyAssign()
+     IngameCheck(IngameStatus)
 }
 
 F6:: {
-   CurrentChallenge := EdgeOfHeaven
-   PlayEdgeofHeaven()
+   ChallengeAssign()
+     IngameCheck(IngameStatus)
 }
 
 StartBounty() {
@@ -177,19 +178,20 @@ StartBounty() {
         BetterClick(409, 343)
         sleep 200
         BetterClick(75, 498)
+        sleep 200
+        BetterClick(68, 470)    ; Start3
         IngameCheck(IngameStatus)
     }
     else {
         AddToLog("No Bounty found")
-        TPtoLobby()
-        Sleep 5000
-        BetterClick(564, 477) ; Leave
+        Sleep 1000
+        BetterClick(566, 477) ; Leave
         Sleep 200
-        BetterClick(445, 445) ; Leave
+        BetterClick(566, 477) ; Leave
         Sleep 200
-        BetterClick(400, 100) ; Leave 2
+        BetterClick(407, 133) ; Leave 2
         Sleep 200
-        BetterClick(408, 135) ; Leave 2
+        BetterClick(407, 133) ; Leave 2
         StartInf()
     }
 }
@@ -203,35 +205,35 @@ BountyAssign() {
             break
         }
     }
-    if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, ShibuyaStationBounty)) {
+    if (ok := FindText(&X, &Y, 562-150000, 218-150000, 562+150000, 218+150000, 0, 0, ShibuyaStationBounty)) {
         CurrentChallenge := ShibuyaStationBounty
         AddToLog("Loading in Shibuya Station Bounty")
         UpdateGUI("Shibuya Station Bounty")
-    } else if (ok := FindText(&X, &Y, 614 - 150000, 233 - 150000, 614 + 150000, 233 + 150000, 0, 0, Landofthegods)) {
+    } else if (ok := FindText(&X, &Y, 595-150000, 218-150000, 595+150000, 218+150000, 0, 0, Landofgodsbounty)) {
         CurrentChallenge := Landofgods
         AddToLog("Loading in Land of the Gods Bounty")
         UpdateGUI("Land of the Gods Bounty")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, marshalislandbounty)) {
+    } else if (ok := FindText(&X, &Y, 446-150000, 218-150000, 446+150000, 218+150000, 0, 0, marshalislandbounty)) {
         CurrentChallenge := marshalisland
         AddToLog("Loading in Marshal Island Bounty")
         UpdateGUI("Marshal Island Bounty")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 3040, 0, DoubleDungeonGodStatue)) {
+    } else if (ok := FindText(&X, &Y, 447-150000, 218-150000, 447+150000, 218+150000, 0, 0, DoubleDungeonGodStatue)) {
         CurrentChallenge := DoubleDungeonGodStatue
         AddToLog("Loading in Double Dungeon God Statue Bounty")
         UpdateGUI("Double Dungeon Bounty")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, DoubleDungeonBounty)) {
+    } else if (ok := FindText(&X, &Y, 447-150000, 218-150000, 447+150000, 218+150000, 0, 0, DoubleDungeonBounty)) {
         CurrentChallenge := DoubleDungeonGodStatue
         AddToLog("Loading in Double Dungeon bounty")
         UpdateGUI("Double Dungeon")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, PlanetNamekBounty)) {
+    } else if (ok := FindText(&X, &Y, 443-150000, 219-150000, 443+150000, 219+150000, 0, 0, PlanetNamekBounty)) {
         CurrentChallenge := PlanetNamek
         AddToLog("Loading in Planet Namek bounty")
         UpdateGUI("Planet Namek")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, ShibuyaAftermathBounty)) {
+    } else if (ok := FindText(&X, &Y, 586-150000, 217-150000, 586+150000, 217+150000, 0, 0, ShibuyaAftermathBounty)) {
         CurrentChallenge := ShibuyaAftermathBounty
         AddToLog("Loading in Shibuya Aftermath bounty")
         UpdateGUI("Shibuya Aftermath Bounty")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, UndergroundChurchBounty)) {
+    } else if (ok := FindText(&X, &Y, 471-150000, 219-150000, 471+150000, 219+150000, 0, 0, UndergroundChurchBounty)) {
         CurrentChallenge := UnderGround
         AddToLog("Loading in Under Ground bounty")
         UpdateGUI("Under Ground")
@@ -239,11 +241,11 @@ BountyAssign() {
         CurrentChallenge := Castle
         AddToLog("Loading in Golden Castle bounty")
         UpdateGUI("Golden Castle")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, SandVillageBounty)) {
+    } else if (ok := FindText(&X, &Y, 429-150000, 218-150000, 429+150000, 218+150000, 0, 0, SandVillageBounty)) {
         CurrentChallenge := SandVillageBounty
         AddToLog("Loading in Sand Village bounty")
         UpdateGUI("Sand Village")
-    } else if (ok := FindText(&X, &Y, 404, 191, 775, 304, 0, 0, Kuinshi1)) {
+    } else if (ok := FindText(&X, &Y, 444-150000, 218-150000, 444+150000, 218+150000, 0, 0, Kuinshi1)) {
         CurrentChallenge := Kuinshi
         AddToLog("Loading in Kuinshi Palace bounty")
         UpdateGUI("Kuinshi Palace")
@@ -259,16 +261,24 @@ BountyAssign() {
         CurrentChallenge := Landofthegods
         AddToLog("Loading in Land Of The Gods Bounty")
         UpdateGUI("Land Of The Gods Bounty")
+    } else if (ok := FindText(&X, &Y, 542-150000, 220-150000, 542+150000, 220+150000, 0, 0, EdgeOfHeavenBounty)) {
+        CurrentChallenge := EdgeOfHeaven
+        AddToLog("Loading in Edge of Heaven Bounty")
+        UpdateGUI("Edge of Heaven Bounty")
+    } else if (ok := FindText(&X, &Y, 434-150000, 220-150000, 434+150000, 220+150000, 0, 0, ShinningCastleBounty)) {
+        CurrentChallenge := ShinningCastle
+        AddToLog("Loading in Shining Castle Bounty")
+        UpdateGUI("Shining Castle Bounty")
     } else {
         CurrentChallenge := "Macro Broken"
         AddToLog("Entered Bounty but couldn't find anything - leaving bounty")
-        BetterClick(445, 440) ; Leave
+        BetterClick(562, 475) ; Leave
         Sleep 200
-        BetterClick(445, 445) ; Leave
+        BetterClick(562, 475) ; Leave
         Sleep 200
-        BetterClick(400, 100) ; Leave 2
+        BetterClick(407, 136) ; Leave 2
         Sleep 200
-        BetterClick(400, 105) ; Leave 2
+        BetterClick(407, 136) ; Leave 2
         Sleep 2000
         StartInf()
         return
@@ -426,8 +436,7 @@ ChallengeAssign() {
         CurrentChallenge := ShibuyaAftermathBounty
         AddToLog("Loading in Shibuya Aftermath")
         UpdateGUI("Shibuya Aftermath")
-    } else if (ok := FindText(&X, &Y, 147-150000, 198-150000, 147+150000, 198+150000, 0, 0, Castlechallenge) || ok := FindText(&X, &Y, 97 - 150000,
-        144 - 150000, 97 + 150000, 144 + 150000, 0, 0, Golden)) {
+    } else if (ok := FindText(&X, &Y, 70-150000, 164-150000, 70+150000, 164+150000, 0, 0, Castlechallenge)) {
         CurrentChallenge := Castle
         AddToLog("Loading in Golden Castle")
         UpdateGUI("Golden Castle")
@@ -451,10 +460,14 @@ ChallengeAssign() {
         CurrentChallenge := EdgeOfHeaven
         AddToLog("Loading in Edge of Heaven challenge")
         UpdateGUI("Edge of Heaven")
+    } else if ((ok:=FindText(&X, &Y, 65-150000, 164-150000, 65+150000, 164+150000, 0, 0, ShinningCastle))) {
+        CurrentChallenge := ShinningCastle
+        AddToLog("Loading in Shinning Castle challenge")
+        UpdateGUI("Shinning Castle")
     } else {
         CurrentChallenge := "Macro Broken"
         AddToLog("Entered challenge but couldn't find anything - must restart")
-        BetterClick(235, 432) ; press leave button
+        BetterClick(175, 462) ; press leave button
         Sleep 2000
         StartInf()
         return
